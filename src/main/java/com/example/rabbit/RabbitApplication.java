@@ -1,6 +1,8 @@
 package com.example.rabbit;
 
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,5 +23,10 @@ public class RabbitApplication {
     @Bean
     Queue queue2(@Value("${app.queue2}") String name) {
         return new Queue(name, true);
+    }
+
+    @Bean
+    MessageConverter messageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

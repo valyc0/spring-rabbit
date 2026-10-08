@@ -17,13 +17,13 @@ public class MessageListener {
     }
 
     @RabbitListener(queues = "${app.queue}")
-    public void receive(String message) {
+    public void receive(Payload message) {
         System.out.println("Ricevuto dalla coda 1: " + message);
-        rabbitTemplate.convertAndSend(queue2, message + " [elaborato]");
+        rabbitTemplate.convertAndSend(queue2, new Payload(message.text() + " [elaborato]", message.number() + 1));
     }
 
     @RabbitListener(queues = "${app.queue2}")
-    public void receiveProcessed(String message) {
+    public void receiveProcessed(Payload message) {
         System.out.println("Ricevuto dalla coda 2: " + message);
     }
 }
